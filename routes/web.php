@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SMSController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,7 @@ Route::get('/sms', function () {
 });
 
 Route::post('/sms', [SMSController::class, 'sendSMS']);
+Route::get('/getUserData', [UserDataController::class, 'getUserData']);
 
 Route::group(['middleware' => ['is_login']], function () {
     Route::get('/register', [UserController::class, 'loadRegister']);

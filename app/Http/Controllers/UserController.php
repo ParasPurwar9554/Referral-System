@@ -70,7 +70,13 @@ class UserController extends Controller
     Mail::send('emails.registerMail', ['data' => $data], function ($message) use ($data) {
       $message->to('paraspurwar5@gmail.com')->subject($data['title']);
     });
-
+    $url1 = "";
+    $notifydata['url'] = $url1;
+    $notifydata['name'] = $request->name;
+    $notifydata['email'] = $request->email;
+    $notifydata['password'] = '';
+    $notifydata['title'] = "New Member Added";
+    \App\Events\SendNotification::dispatch($notifydata);
     // Verification mail send
     $url = $domain . '/email-verification/' . $token;
     $data['url'] = $url;
@@ -79,7 +85,7 @@ class UserController extends Controller
     $data['title'] = "Referral Verification Mail";
 
     Mail::send('emails.verifyMail', ['data' => $data], function ($message) use ($data) {
-      $message->to('test@gmail.com')->subject($data['title']);
+      $message->to('paraspurwar5@gmail.com')->subject($data['title']);
     });
 
     return back()->with('success', 'Your registraion has been successfull & Please verify your email!');
